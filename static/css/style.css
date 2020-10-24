@@ -1,0 +1,50 @@
+#header {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#title {
+  font-weight: 600;
+  font-style:normal;
+  font-size: 30px;
+  color: white;
+  margin-top: 10%;
+}
+
+#icon {
+   height: 40px;
+   width: 40px;
+   margin-top: 10%;
+   position: center;
+}
+
+.img-search {
+  border-radius: 50%;
+  border: 3px solid white;
+  width: 100px;
+  height: 100px;
+  height: 150px;
+  width: 150px;
+}
+
+.half-rule {
+    margin-left: 0;
+    text-align: left;
+    width: 90%;
+ }
+
+.nav-home,.input-group-btn {
+  display: flex;
+}
+
+.navbar {
+  background: black;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  color: white
+}
+
+.artist-search {
+  border-top: 5px solid white;
+}

@@ -1,0 +1,35 @@
+{% block content %}
+
+<table class="table table-dark table-stripe artist-search">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Genre</th>
+      <th>Followers</th>
+      <th>Popularity</th>
+    </tr>
+  </thead>
+
+  {% for artist in results %}
+    <tr>
+      <td>
+        {% if artist.images[0] %}
+          <img src="{{artist.images[1].url}}" alt="{{artist.name}}" class="img-search">
+        {% else %}
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/archive/a/ac/20121003093557%21No_image_available.svg/120px-No_image_available.svg.png" class="img-search">
+        {% endif %}
+      </td>
+
+      <td> {{artist.name}} </td>
+
+      <td> {{ artist.genres | join(', ') }} </td>
+
+      <td class="number">{{ artist.followers.total }}</td>
+      
+      <td class="number">{{ artist.popularity }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

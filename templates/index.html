@@ -1,2 +1,15 @@
-<link href="{{ url_for('static', filename='style.css') }}" type="text/css" rel='stylesheet'>
-<h1>hello world</h1>
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="mt-1">
+      <h1>SpotiFlask</h1>
+    </div>
+    <p>
+      Trying to use spotify api with flask (:
+    </p>
+
+  </div>
+
+{% endblock %}
