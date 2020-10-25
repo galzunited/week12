@@ -4,12 +4,34 @@ from spotify_client import *
 from secret import *
 
 app = Flask(__name__)
-
+spotify = SpotifyAPI(client_id, client_secret)
 
 @app.route('/')
 def index():
     return render_template(
       'index.html'
+    )
+
+@app.route('/new_releases')
+def new_releases():
+    results = spotify.get_new_releases()
+    items = results['albums']['items']
+    # print('items', items)
+    return render_template(
+      'new_releases.html',
+      items=items
+    )
+
+@app.route('/artist/<artist_id>')
+def artist_page(artist_id):
+    print('id', artist_id)
+    artist = spotify.get_artist(artist_id)
+    result = spotify.get_top_tracks(artist_id)
+    tracks = result['tracks']
+    return render_template(
+        'artist_page.html',
+        artist=artist,
+        tracks=tracks
     )
 
 @app.route('/about')
@@ -24,7 +46,6 @@ def search():
       query = request.args['user_query']
       search_type = request.args['search_type']
       print('search type', search_type)
-      spotify = SpotifyAPI(client_id, client_secret)
       results = spotify.search(query, search_type = search_type)[search_type + 's']['items']
       print(results)
       return render_template(

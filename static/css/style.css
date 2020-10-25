@@ -17,7 +17,7 @@
    position: center;
 }
 
-.img-search {
+.img-round {
   border-radius: 50%;
   border: 3px solid white;
   width: 100px;
@@ -26,10 +26,12 @@
   width: 150px;
 }
 
-.half-rule {
+.rule {
     margin-left: 0;
     text-align: left;
     width: 90%;
+    border: 1px solid black;
+    margin-bottom: 15px
  }
 
 .nav-home,.input-group-btn {
@@ -47,4 +49,22 @@
 
 .artist-search {
   border-top: 5px solid white;
+}
+
+#footer {
+  position: fixed; 
+  padding: 10px 10px 0px 10px; 
+  bottom: 0; 
+  width: 100%; 
+  height: 40px; 
+  background: black;
+  color: white
+}
+
+#footer p {
+  text-align: right;
+}
+
+.fix-footer {
+  height: 40px;
 }

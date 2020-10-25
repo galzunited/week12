@@ -3,6 +3,7 @@
 <table class="table table-dark table-stripe artist-search">
   <thead>
     <tr>
+      <th>Image</th>
       <th>Name</th>
       <th>Artist</th>
       <th>Album</th>
@@ -12,6 +13,15 @@
 
   {% for track in results %}
   <tr>
+    <td>
+      {% if track.album.images[0] %}
+        <a href="{{ track.external_urls.spotify }}">
+          <img src="{{track.album.images[0].url}}" alt="{{track.name}}" class="img-round">
+        </a>
+      {% else %}
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/archive/a/ac/20121003093557%21No_image_available.svg/120px-No_image_available.svg.png" class="img-round">
+      {% endif %}
+    </td>
 
     <td>
       <a href="{{ track.external_urls.spotify }}"> {{ track.name }} </a>
@@ -19,7 +29,7 @@
 
     <td>
       {% for artist in track.artists %}
-        <a> {{ artist.name }} </a>
+        <a href="{{ url_for('artist_page', artist_id=artist.id) }}"> {{ artist.name }} </a>
       {% endfor %}
     </td>
 

@@ -77,20 +77,13 @@ class SpotifyAPI(object):
             "Authorization": f"Bearer {access_token}"
         }
         return headers
-        
-        
-    def get_resource(self, lookup_id, resource_type='albums', version='v1'):
-        endpoint = f"https://api.spotify.com/{version}/{resource_type}/{lookup_id}"
-        headers = self.get_resource_header()
-        r = requests.get(endpoint, headers=headers)
-        if r.status_code not in range(200, 299):
-            return {}
-        return r.json()
     
-    def base_search(self, query_params):
+    def base_search(self, query_params, endpoint):
         headers = self.get_resource_header()
-        endpoint = "https://api.spotify.com/v1/search"
-        lookup_url = f"{endpoint}?{query_params}"
+        if (query_params):
+          lookup_url = f"{endpoint}?{query_params}"
+        else:
+          lookup_url = endpoint
         r = requests.get(lookup_url, headers=headers)
         print(r.status_code)
         if r.status_code not in range(200, 299):  
@@ -98,7 +91,6 @@ class SpotifyAPI(object):
         return r.json()
     
     def search(self, query=None, operator=None, operator_query=None, search_type='artist'):
-        print('maa', search_type)
         if query == None:
             raise Exception("A query is required")
         if isinstance(query, dict):
@@ -108,6 +100,18 @@ class SpotifyAPI(object):
                 operator = operator.upper()
                 if isinstance(operator_query, str):
                     query = f"{query} {operator} {operator_query}"
+        endpoint = "https://api.spotify.com/v1/search"
         query_params = urlencode({"q": query, "type": search_type.lower()})
-        print(query_params)
-        return self.base_search(query_params)
+        return self.base_search(query_params, endpoint)
+
+    def get_artist(self, artist_id):
+      lookup_url = f"https://api.spotify.com/v1/artists/{artist_id}"
+      return self.base_search(None, lookup_url)
+
+    def get_top_tracks(self, artist_id):
+      lookup_url = f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?market=IL"
+      return self.base_search(None, lookup_url)
+
+    def get_new_releases(self):
+      lookup_url = f"https://api.spotify.com/v1/browse/new-releases?market=IL"
+      return self.base_search(None, lookup_url)
