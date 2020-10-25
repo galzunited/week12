@@ -2,9 +2,12 @@ import base64
 from flask import Flask, request, jsonify, render_template
 from spotify_client import *
 from secret import *
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-spotify = SpotifyAPI(client_id, client_secret)
+load_dotenv()
+spotify = SpotifyAPI(os.environ['CLIENT_ID'], os.environ['CLIENT_SECRET'])
 
 @app.route('/')
 def index():
