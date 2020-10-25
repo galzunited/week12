@@ -1,7 +1,7 @@
 import base64
 from flask import Flask, request, jsonify, render_template
-from spotify_client import *
-from secret import *
+from spotify_client import SpotifyAPI
+# from secret import *
 import os
 from dotenv import load_dotenv
 
@@ -19,7 +19,6 @@ def index():
 def new_releases():
     results = spotify.get_new_releases()
     items = results['albums']['items']
-    # print('items', items)
     return render_template(
       'new_releases.html',
       items=items
@@ -27,7 +26,6 @@ def new_releases():
 
 @app.route('/artist/<artist_id>')
 def artist_page(artist_id):
-    print('id', artist_id)
     artist = spotify.get_artist(artist_id)
     result = spotify.get_top_tracks(artist_id)
     tracks = result['tracks']
@@ -48,16 +46,13 @@ def search():
     try:
       query = request.args['user_query']
       search_type = request.args['search_type']
-      print('search type', search_type)
       results = spotify.search(query, search_type = search_type)[search_type + 's']['items']
-      print(results)
       return render_template(
           'search.html',
           results=results,
           search_type=search_type
       )
     except Exception as e:
-      print('blahh', e)
       return render_template('search.html')
 
 if __name__ == '__main__':
